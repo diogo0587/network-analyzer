@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: network-analyzer-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "20"
+    routes:
+      - path: /api/packets
+        matchType: prefix
+    healthCheckPath: /api/packets?action=status
+    initialDeployHook: npm run build
